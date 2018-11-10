@@ -20,7 +20,7 @@ animcount=0
 
 walkRight=[pygame.image.load('runner1.png'),pygame.image.load('runner2.png'),pygame.image.load('runner3.png'),
            pygame.image.load('runner4.png'),pygame.image.load('runner5.png'),pygame.image.load('runner6.png'),
-           pygame.image.load('runner.png7'),pygame.image.load('runner.png8')]
+           pygame.image.load('runner7.png'),pygame.image.load('runner8.png')]
 
 #walkLeft=[pygame.image.load(''),pygame.image.load(''),pygame.image.load(''),
 #         pygame.image.load(''),pygame.image.load(''),pygame.image.load('')]
