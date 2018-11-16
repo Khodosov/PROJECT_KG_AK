@@ -1,4 +1,5 @@
 import pygame
+import time
 
 pygame.init()
 win = pygame.display.set_mode((1280, 720))
@@ -8,6 +9,9 @@ pygame.display.set_caption("Guk & Khodosov prod.")
 bg = pygame.image.load('win.jpg')
 
 # переменные-характеристики "персонажей"
+
+player2 = pygame.image.load('find1.png')
+player1 = pygame.image.load('geo.png')
 
 x1 = 5
 y1 = 655
@@ -29,6 +33,16 @@ jumpRange2 = 8
 left2 = False
 right2 = False
 
+# тут должен быть лого
+
+# нужно отрисовывать окно, например, 5 секунд
+
+# while
+#    pygame.mixer.music.load('')
+#    pygame.mixer.music.play(0)
+#    logo = pygame.image.load('logo.jpg')
+#    win.blit(logo, (0, 0))
+
 pygame.mixer.music.load('Pskov.mp3')
 pygame.mixer.music.play(-1)
 
@@ -36,9 +50,11 @@ pygame.mixer.music.play(-1)
 
 def drawWindow():
     win.blit(bg, (0, 0))
+    win.blit(player1, (x1, y1))
+    win.blit(player2, (x2, y2))
     # win.fill((0, 0, 0)
-    pygame.draw.rect(win, (0, 0, 255), (x2, y2, widht2, hight2))
-    pygame.draw.rect(win, (0, 255, 0), (x1, y1, widht1, hight1))
+    # pygame.draw.rect(win, (0, 0, 255), (x2, y2, widht2, hight2))
+    # pygame.draw.rect(win, (0, 255, 0), (x1, y1, widht1, hight1))
     pygame.display.update()
 
 
@@ -63,12 +79,12 @@ while run1 or run2:
         left1 = False
         right1 = True
 
-    if keys[pygame.K_1] and x2 > 5:
+    if keys[pygame.K_a] and x2 > 5:
         x2 -= speed2
         left2 = True
         right2 = False
 
-    if keys[pygame.K_3] and x2 < 1280 - widht2 - 5:
+    if keys[pygame.K_d] and x2 < 1280 - widht2 - 5:
         x2 += speed2
         left2 = False
         right2 = True
@@ -96,7 +112,7 @@ while run1 or run2:
 
     if not (isJmp2):
 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_w]:
             isJmp2 = True
     else:
         if jumpRange2 >= -8:
