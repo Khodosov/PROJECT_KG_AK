@@ -1,5 +1,5 @@
 import pygame
-
+from levels import l1, l2, l3, l4, l5, l6, l7, l8, l9
 pygame.init()
 
 win = pygame.display.set_mode((1280, 720))
@@ -50,11 +50,23 @@ right2 = False
 pygame.mixer.music.load('Pskov.mp3')
 pygame.mixer.music.play(-1)
 
+# Функция, которая отображает уровень
+def level(lev, plat):
+    x = 0
+    y = 0
+    for i, j in enumerate(lev):
+        for k, l in enumerate(j):
+            if l == '-':
+                win.blit(plat, (x, y))
+            x += 128
+        y += 72
+        x = 0   
 
 # функция, которая рисует окно
 
 
 def drawWindow():
+    level(l3, platform) #l3 чисто для примера, вообще там для каждого уровня должна быть своя переменная (см. levels.py)
     win.blit(bg, (0, 0))
     win.blit(player1, (x1, y1))
     win.blit(player2, (x2, y2))
@@ -63,24 +75,24 @@ def drawWindow():
     # pygame.draw.rect(win, (0, 255, 0), (x1, y1, widht1, hight1))
     pygame.display.update()
 
-keys = pygame.key.get_pressed()
 
 
 # Сделать таймеры, в том числе для лого
 
 
 
-if keys[pygame.K_1]:
+#if keys[pygame.K_1]:
+if 1 == 1:
     run1 = True
     run2 = True
     while run1 or run2:
         pygame.time.delay(5)
-
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run1 = False
                 run2 = False
-
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and x1 > 5:
             x1 -= speed1
             left1 = True
