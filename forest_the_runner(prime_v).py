@@ -1,5 +1,5 @@
 import pygame
-from levels import l1, l2, l3, l4, l5, l6, l7, l8, l9, Platform  # li (1<=i<=9)
+from levels import l1, l2, l3, l4, l5, l6, l7, l8, l9, l0, Platform, Prize  # li (1<=i<=9)
 #  - это список платформ - уровень, из файла levels.py.
 #  Platform - класс платформ
 from players import Player  # Player - класс игроков
@@ -9,6 +9,8 @@ win = pygame.display.set_mode((1280, 720))
 
 pygame.display.set_caption("Guk & Khodosov prod.")
 # ============================================================================
+prize = ('prize.png')
+plat = ('pl.png')
 bg = pygame.image.load('win.jpg')
 logo = pygame.image.load('new_logo.jpg')
 lvl_p_win = pygame.image.load('histranger.jpg')
@@ -44,12 +46,6 @@ skip = 0
 # Чудесная композиция ========================================================
 pygame.mixer.music.load('Pskov.mp3')
 pygame.mixer.music.play(-1)
-# Tutor  =====================================================================
-while skip < 180:
-    win.blit(tutor, (0, 0))
-    pygame.display.update()
-    skip += 1
-skip = 0
 # ============================================================================
 sprite_group = pygame.sprite.Group()  # переменная (группа), в которой
 # содержатся все элементы класса Sprite (и игроки, и платформы)
@@ -58,8 +54,11 @@ sprite_group = pygame.sprite.Group()  # переменная (группа), в 
 sprite_group.add(pl1)
 sprite_group.add(pl2)
 platforms = []  # Список всех платформ в конкретном уровне
+prizes = [] # Список всех призов (финишей)
+
 
 # Level pick =================================================================
+
 def drawWindow_0():
     win.blit(lvl_p_win, (0, 0))
     pygame.display.update()
@@ -82,7 +81,7 @@ while run1:
         lev = l3
         break
     elif keys[pygame.K_4]:
-        lev = 4
+        lev = l4
         break
     elif keys[pygame.K_5]:
         lev = l5
@@ -116,11 +115,16 @@ y = 0
 for i, j in enumerate(lev):  # движение по столбцам
     for k, l in enumerate(j):  # движение по строке
         if l == '-':
-            pl = Platform(x, y)  # переменная, отвечающая за расположение
+            pl = Platform(x, y, plat)  # переменная, отвечающая за расположение
             # в координатах каждой новой платформы
             sprite_group.add(pl)  # добавление в группу новой платформы
             platforms.append(
                 pl)  # добавление в список платформ новой платформы
+        if l == '.':
+            pr = Prize(x, y, prize)
+            sprite_group.add(pr)
+            prizes.append(
+                pr)
         x += 128  # переход к след. элементу строки, но теперь в координатах
     y += 72  # переход к след. столбцу, но теперь в координатах
     x = 0  # обнуление х, так как теперь просматривается следующая строка
@@ -134,6 +138,10 @@ if 1 == 1:  # здесь должен быть выбор уровня (Саня
     while run1 or run2:
         pygame.time.delay(5)
         win.blit(bg, (0, 0))
+        if pl1.isFinish is True:
+                break
+        if pl2.isFinish is True:
+                break
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -167,9 +175,9 @@ if 1 == 1:  # здесь должен быть выбор уровня (Саня
                     right2 = False
                 if event.key == pygame.K_w:
                     up2 = False
-        pl1.update(left1, right1, up1, platforms)  # метод обноления
+        pl1.update(left1, right1, up1, platforms, prizes)  # метод обноления
         #                                           в классе Player
-        pl2.update(left2, right2, up2, platforms)  # ^^^^^
+        pl2.update(left2, right2, up2, platforms, prizes)  # ^^^^^
         sprite_group.draw(win)  # отрисовка ВСЕХ элементов группы
         #                            (и платформ, и игроков)
         pygame.display.flip()
